@@ -1,30 +1,47 @@
 import React, {useContext} from 'react';
-import {Text, View, StyleSheet, FlatList, Button} from 'react-native';
+import {Text, View, StyleSheet, FlatList, Button, TouchableOpacity} from 'react-native';
 import {Context} from '../context/BlogContext';
 import { Feather} from '@expo/vector-icons'
 
-const IndexScreen = () => {
+const IndexScreen = ({navigation}) => {
 // const blogpost = useContext(BlogContext);
-const {state, addBlogPosts} = useContext(Context);
+const {state, addBlogPosts, deleteBlogPost} = useContext(Context);
 
     return(
         <View>
             <Button title='Add Post' onPress={() => addBlogPosts()}/>
             <FlatList
                 data={state}
-                keyExtractor={(blogpost) => blogpost.title}
+                keyExtractor={(blogPost) => blogPost.title}
                 renderItem={({item}) => {
                     return ( 
-                        <View style={styles.row}>
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Feather name="trash" style={styles.icon}/>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('Show', {id: item.id})}>
+                            <View style={styles.row}>
+                                <Text style={styles.title}>{item.title} - {item.id}</Text>
+                                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                                    <Feather name="trash" style={styles.icon}/>
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                     )
                 }}
             />
         </View>
     )
 }
+
+// navigation.setOptions({
+//     headerRight: () => (
+//       <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+//         <AntDesign
+//           name="plussquareo"
+//           size={24}
+//           color="black"
+//           style={style.headerButton}
+//         />
+//       </TouchableOpacity>
+//     ),
+//   });
 
 const styles = StyleSheet.create({
 row:{
