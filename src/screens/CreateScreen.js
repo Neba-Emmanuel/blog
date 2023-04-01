@@ -4,12 +4,12 @@ import { Context } from '../context/BlogContext';
 import BlogPostForm from '../component/BlogPostForm';
 
 const CreateScreen = ({ navigation }) => {
-  const { addBlogPost } = useContext(Context);
+  const { addBlogPosts } = useContext(Context);
 
   return (
     <BlogPostForm
       onSubmit={(title, content) => {
-        addBlogPost(title, content, () => navigation.navigate('Index'));
+        addBlogPosts(title, content, () => navigation.navigate('Index'));
       }}
     />
   );
