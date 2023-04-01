@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Context } from '../context/BlogContext';
-import { EvilIcons } from '@expo/vector-icons';
+import BlogPostForm from '../component/BlogPostForm';
 
 const CreateScreen = ({ route, navigation }) => {
 
-  return (
-    <View>
-      <Text>CreateScreen</Text>
-    </View>
-  );
+  const {addBlogPosts} = useContext(Context);
+
+  return <BlogPostForm/>
 };
 
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+});
 
 export default CreateScreen;
