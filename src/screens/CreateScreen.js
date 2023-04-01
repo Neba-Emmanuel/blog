@@ -3,16 +3,18 @@ import { StyleSheet } from 'react-native';
 import { Context } from '../context/BlogContext';
 import BlogPostForm from '../component/BlogPostForm';
 
-const CreateScreen = ({ route, navigation }) => {
+const CreateScreen = ({ navigation }) => {
+  const { addBlogPost } = useContext(Context);
 
-  const {addBlogPosts} = useContext(Context);
-
-  return <BlogPostForm/>
+  return (
+    <BlogPostForm
+      onSubmit={(title, content) => {
+        addBlogPost(title, content, () => navigation.navigate('Index'));
+      }}
+    />
+  );
 };
 
-
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default CreateScreen;
