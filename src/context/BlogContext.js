@@ -1,56 +1,69 @@
-import React,{useReducer} from "react";
+import React, { useReducer } from "react";
 import createDataContext from "./createDataContext";
 
 // const BlogContext = React.createContext();
-const blogReducer = (state, action) =>{
-    switch(action.type){
-        case 'delete_blogpost':
-            return state.filter((blogPost) => blogPost.id !== action.payload);
-        case 'add_blogpost':
-            return [...state, {
-                id: Math.floor(Math.random() * 99999), 
-                title: action.payload.title, 
-                content: action.payload.content}];
-        default:
-            return state;
-    }
-}
-const addBlogPosts = (dispatch) => {
-    return (title, content, callback) => {
-        dispatch({type: 'add_blogpost', payload: {title, content}});
-        callback();
-    }
-// Preferable when dealing with apis
-    // return async (title, content, callback) => {
-    //     try{
-    //         await axios.post('blogpost', title, content)
-    //         dispatch({type: 'add_blogpost', payload: {title, content}});
-    //         callback();
-    //     }
-    //     catch(e){
-
-    //     }
-    // }
-}
-const editBlogPost = (dispatch) => {
-    return (id, title, content, callback) => {
-      dispatch({
-        type: 'edit_blogpost',
-        payload: { id, title, content },
+const blogReducer = (state, action) => {
+  switch (action.type) {
+    case "edit_blogpost":
+      return state.map((blogPost) => {
+        return blogPost.id === action.payload.id ? action.payload : blogPost;
       });
-      if (callback) {
+    case "delete_blogpost":
+      return state.filter((blogPost) => blogPost.id !== action.payload);
+    case "add_blogpost":
+      return [
+        ...state,
+        {
+          id: Math.floor(Math.random() * 99999),
+          title: action.payload.title,
+          content: action.payload.content,
+        },
+      ];
+    default:
+      return state;
+  }
+};
+const addBlogPosts = (dispatch) => {
+  return (title, content, callback) => {
+    dispatch({ type: "add_blogpost", payload: { title, content } });
+    if (callback) {
         callback();
       }
-    };
   };
-const deleteBlogPost = (dispatch) => {
-    return id => {
-        dispatch({type: 'delete_blogpost', payload: id});
+  // Preferable when dealing with apis
+  // return async (title, content, callback) => {
+  //     try{
+  //         await axios.post('blogpost', title, content)
+  //         dispatch({type: 'add_blogpost', payload: {title, content}});
+  //         callback();
+  //     }
+  //     catch(e){
+
+  //     }
+  // }
+};
+const editBlogPost = (dispatch) => {
+  return (id, title, content, callback) => {
+    dispatch({
+      type: "edit_blogpost",
+      payload: { id, title, content },
+    });
+    if (callback) {
+      callback();
     }
-}
+  };
+};
+const deleteBlogPost = (dispatch) => {
+  return (id) => {
+    dispatch({ type: "delete_blogpost", payload: id });
+  };
+};
 
-
-export const {Context, Provider} = createDataContext(blogReducer, {addBlogPosts, deleteBlogPost, editBlogPost}, [{title: 'Test Post', content: 'Hello World', id: '1'}]);
+export const { Context, Provider } = createDataContext(
+  blogReducer,
+  { addBlogPosts, deleteBlogPost, editBlogPost },
+  [{ title: "Test Post", content: "Hello World", id: "1" }]
+);
 /*
 export const BlogProvider = ({children}) => {
 const [blogPosts, dispatch] = useReducer(blogReducer, []);
