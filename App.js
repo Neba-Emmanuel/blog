@@ -6,7 +6,8 @@ import IndexScreen from "./src/screens/IndexScreen";
 import { Provider } from "./src/context/BlogContext";
 import ShowScreen from "./src/screens/ShowScreen";
 import CreateScreen from "./src/screens/CreateScreen";
-import { Feather } from "@expo/vector-icons";
+import { Feather, EvilIcons } from "@expo/vector-icons";
+import EditScreen from "./src/screens/EditScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ const App = ({ navigation }) => {
                   name="plus"
                   size={30}
                   color="black"
-                  style={{ marginRight: 20 }}
+                  style={{ marginRight: 5 }}
                 />
               </TouchableOpacity>
             ),
@@ -34,13 +35,31 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="Show"
           component={ShowScreen}
-          options={{ title: "Blog Details" }}
+          options={({ navigation, route }) => ({
+            headerTitle: "Blog Details",
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Edit",{id: route.params.id})}>
+                <EvilIcons
+                  name="pencil"
+                  size={30}
+                  color="black"
+                  style={{ marginRight: 5 }}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
 
         <Stack.Screen 
           name="Create" 
           component={CreateScreen} 
           options={{ title: "Write Post" }}
+        />
+
+        <Stack.Screen 
+          name="Edit" 
+          component={EditScreen} 
+          options={{ title: "Edit Post" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
