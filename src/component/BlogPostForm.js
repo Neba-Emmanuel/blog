@@ -6,7 +6,7 @@ const BlogPostForm = ({ onSubmit, initialValues }) => {
   const [content, setContent] = useState(initialValues.content);
 
   return (
-    <View>
+    <View style={{marginHorizontal: 10, marginTop: 10}}>
       <Text style={styles.label}>Enter Title:</Text>
       <TextInput
         style={styles.input}
@@ -38,12 +38,11 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginBottom: 15,
     padding: 5,
-    margin: 5
+    marginTop: 5
   },
   label: {
     fontSize: 20,
     marginBottom: 5,
-    marginLeft: 5
   }
 });
 
