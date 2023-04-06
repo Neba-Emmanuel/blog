@@ -1,0 +1,19 @@
+{
+  "blogposts": [
+    {
+      "title": "Hello ",
+      "content": "Hello World 🌍",
+      "id": 2
+    },
+    {
+      "title": "Cool",
+      "content": "React native is cool😎",
+      "id": 3
+    },
+    {
+      "title": "Cool Cool",
+      "content": "React native is damn cool😎",
+      "id": 4
+    }
+  ]
+}
